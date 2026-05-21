@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FCM Background Notification Test</title>
+</head>
+<body>
+    <h1>FCM Background Test</h1>
+    <button id="auth-btn">Enable Notifications</button>
+    
+    <h3>Your Device Token (Copy this to send tests):</h3>
+    <textarea id="token-box" rows="5" cols="60" readonly placeholder="Token will appear here..."></textarea>
+
+    <!-- Import Firebase SDK modules -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getMessaging, getToken } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-messaging.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCjP2QjWeaWDh9HH3TdHO51iI2PcuGmi_w",
+            authDomain: "notification-test-62210.firebaseapp.com",
+            projectId: "notification-test-62210",
+            storageBucket: "notification-test-62210.firebasestorage.app",
+            messagingSenderId: "108631522148",
+            appId: "1:108631522148:web:f68e1991209b6e5e099871"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const messaging = getMessaging(app);
+
+        const authBtn = document.getElementById('auth-btn');
+        const tokenBox = document.getElementById('token-box');
+
+        authBtn.addEventListener('click', async () => {
+            try {
+                // Request explicit native browser permission
+                const permission = await Notification.requestPermission();
+                if (permission === 'granted') {
+                    console.log('Notification permission granted.');
+                    
+                    // Fetch the unique device token using your generated VAPID Key
+                    const currentToken = await getToken(messaging, { 
+                        vapidKey: 'BCDrUDdezo0XseDTb-muMvmno-IIrnwCT0E1INneqmSxTNmYDiGHlrovCE8MiXcZIJn6Ty0ZG2bFttm6y8_wjrc' 
+                    });
+                    
+                    if (currentToken) {
+                        tokenBox.value = currentToken;
+                        console.log('Token generated successfully.');
+                    } else {
+                        tokenBox.value = "No registration token available. Check your service worker configuration.";
+                    }
+                } else {
+                    tokenBox.value = "Permission denied by user.";
+                }
+            } catch (err) {
+                console.error('An error occurred while retrieving token. ', err);
+                tokenBox.value = "Error: " + err.message;
+            }
+        });
+    </script>
+</body>
+</html>
