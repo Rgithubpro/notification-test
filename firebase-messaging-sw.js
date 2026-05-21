@@ -4,12 +4,12 @@ importScripts('https://www.gstatic.com/firebasejs/10.8.0/firebase-messaging-comp
 
 // Initialize the Firebase app inside the service worker
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyCjP2QjWeaWDh9HH3TdHO51iI2PcuGmi_w",
+  authDomain: "notification-test-62210.firebaseapp.com",
+  projectId: "notification-test-62210",
+  storageBucket: "notification-test-62210.firebasestorage.app",
+  messagingSenderId: "108631522148",
+  appId: "1:108631522148:web:f68e1991209b6e5e099871"
 };
 
 firebase.initializeApp(firebaseConfig);
