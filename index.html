@@ -40,9 +40,15 @@
                 if (permission === 'granted') {
                     console.log('Notification permission granted.');
                     
-                    // Fetch the unique device token using your generated VAPID Key
+                    // 1. We registreren de service worker met jouw exacte repository-naam
+                    const registration = await navigator.serviceWorker.register('/notification-test/firebase-messaging-sw.js', {
+                        scope: '/notification-test/'
+                    });
+                    
+                    // 2. We geven deze registratie mee aan Firebase om de token te genereren
                     const currentToken = await getToken(messaging, { 
-                        vapidKey: 'BCDrUDdezo0XseDTb-muMvmno-IIrnwCT0E1INneqmSxTNmYDiGHlrovCE8MiXcZIJn6Ty0ZG2bFttm6y8_wjrc' 
+                        vapidKey: 'BCDrUDdezo0XseDTb-muMvmno-IIrnwCT0E1INneqmSxTNmYDiGHlrovCE8MiXcZIJn6Ty0ZG2bFttm6y8_wjrc',
+                        serviceWorkerRegistration: registration
                     });
                     
                     if (currentToken) {
